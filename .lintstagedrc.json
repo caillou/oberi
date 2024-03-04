@@ -1,0 +1,6 @@
+{
+  "*.{tsx,ts,jsx,js}": [
+    "eslint --fix --plugin unused-imports --rule 'unused-imports/no-unused-imports: error'"
+  ],
+  "*": ["prettier --write --ignore-unknown"]
+}
