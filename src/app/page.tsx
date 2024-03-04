@@ -1,10 +1,14 @@
 import dayjs from 'dayjs';
 import durationPlugin from 'dayjs/plugin/duration';
+import timezonePlugin from 'dayjs/plugin/timezone';
+import utcPlugin from 'dayjs/plugin/utc';
 import { z } from 'zod';
 
 import ZurichIcon from '@/components/zurich-icon';
 
 dayjs.extend(durationPlugin);
+dayjs.extend(timezonePlugin);
+dayjs.extend(utcPlugin);
 
 const strainSchema = z.object({
   type: z.literal('strain'),
@@ -25,7 +29,7 @@ const legSchema = z.tuple([
 const connectionSchema = z.object({
   from: z.string(),
   to: z.string(),
-  departure: z.coerce.date(),
+  departure: z.string(),
   arrival: z.coerce.date(),
   duration: z.number(),
   // dep_delay: z.string(),
@@ -76,7 +80,7 @@ export default async function Home() {
   ).json();
 
   const result = resultSchema.parse(rawJson);
-  const now = dayjs();
+  const now = dayjs.tz(undefined, 'Europe/Zurich');
 
   return (
     <main>
@@ -88,13 +92,10 @@ export default async function Home() {
             return undefined;
           }
 
-          const departure = dayjs(connection.departure);
+          const departure = dayjs.tz(connection.departure, 'Europe/Zurich');
 
           return (
-            <li
-              key={connection.departure.toISOString()}
-              className="m-2 my-4 flex items-center space-x-2"
-            >
+            <li key={connection.departure} className="m-2 my-4 flex items-center space-x-2">
               <LineIcon line={leg.line} />
               <div className="grow">
                 <div className="font-medium">{leg.terminal}</div>
