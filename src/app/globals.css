@@ -8,6 +8,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))

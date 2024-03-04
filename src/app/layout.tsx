@@ -3,12 +3,16 @@ import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 
 const fontDisplay = IBM_Plex_Sans({
-  weight: '700',
+  weight: '500',
   subsets: ['latin'],
   variable: '--font-display',
 });
 
-const fontBody = IBM_Plex_Mono({ weight: '400', subsets: ['latin'], variable: '--font-body' });
+const fontBody = IBM_Plex_Mono({
+  weight: ['300', '500'],
+  subsets: ['latin'],
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,7 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-body ${fontDisplay.variable} ${fontBody.variable}`}>{children}</body>
+      <body className={`font-body font-light ${fontDisplay.variable} ${fontBody.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
