@@ -1,14 +1,16 @@
 import { z } from 'zod';
 
-const strainSchema = z.object({
+const sTrainLegSchema = z.object({
   type: z.literal('strain'),
   line: z.string(),
   terminal: z.string(),
 });
 
+export type STrainLeg = z.infer<typeof sTrainLegSchema>;
+
 const legSchema = z.tuple([
   z.discriminatedUnion('type', [
-    strainSchema,
+    sTrainLegSchema,
     z.object({
       type: z.literal('walk'),
     }),
