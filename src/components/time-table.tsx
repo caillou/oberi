@@ -48,10 +48,7 @@ const zurichTime = (timeString?: string) => dayjs.tz(timeString, 'Europe/Zurich'
 function TimeTable({ result }: { result: RouteResult }) {
   const [now, setNow] = useState(zurichTime());
 
-  useInterval(() => {
-    console.log('tick');
-    setNow(zurichTime());
-  }, 1000);
+  useInterval(() => setNow(zurichTime()), 1000);
 
   return (
     <ul>
