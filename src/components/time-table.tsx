@@ -29,8 +29,9 @@ function durationTillDeparture({ now, departure }: { now: dayjs.Dayjs; departure
 const formatDuration = (duration: Duration) => {
   const hours = duration.hours();
   const minutes = duration.minutes();
+  const seconds = duration.seconds();
 
-  if (minutes < 0) {
+  if (seconds < 0) {
     return `0'`;
   }
 
@@ -64,7 +65,7 @@ function TimeTable({ result }: { result: RouteResult }) {
 
         const timeLeftInMinutes = timeLeft.asMinutes();
 
-        if (timeLeftInMinutes < 1) {
+        if (timeLeftInMinutes < -1) {
           return undefined;
         }
 
