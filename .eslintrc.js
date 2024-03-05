@@ -26,6 +26,7 @@ const jsAndTsRules = {
       allow: ['__typename'],
     },
   ],
+  'import/prefer-default-export': 'off',
 };
 
 module.exports = {

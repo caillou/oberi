@@ -2,43 +2,13 @@ import dayjs from 'dayjs';
 import durationPlugin from 'dayjs/plugin/duration';
 import timezonePlugin from 'dayjs/plugin/timezone';
 import utcPlugin from 'dayjs/plugin/utc';
-import { z } from 'zod';
 
 import ZurichIcon from '@/components/zurich-icon';
+import { routeResultSchema, type STrainLeg } from '@/schema/swiss-public-transport-api';
 
 dayjs.extend(durationPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(utcPlugin);
-
-const strainSchema = z.object({
-  type: z.literal('strain'),
-  line: z.string(),
-  terminal: z.string(),
-});
-
-const legSchema = z.tuple([
-  z.discriminatedUnion('type', [
-    strainSchema,
-    z.object({
-      type: z.literal('walk'),
-    }),
-  ]),
-  z.object({}),
-]);
-
-const connectionSchema = z.object({
-  from: z.string(),
-  to: z.string(),
-  departure: z.string(),
-  arrival: z.coerce.date(),
-  duration: z.number(),
-  // dep_delay: z.string(),
-  legs: legSchema,
-});
-
-const resultSchema = z.object({
-  connections: connectionSchema.array(),
-});
 
 const oberwinterthurStopId = '8506016';
 const winterthurStopId = '8506000';
@@ -65,7 +35,7 @@ function durationTillDeparture({ now, departure }: { now: dayjs.Dayjs; departure
   return hours > 0 ? duration.format("H[h]mm[']") : `${minutes}'`;
 }
 
-const goesToZurich = (leg: z.infer<typeof strainSchema>) => !!leg.terminal.match(/zürich|aarau/i);
+const goesToZurich = (leg: STrainLeg) => !!leg.terminal.match(/zürich|aarau/i);
 
 export default async function Home() {
   const rawJson = await (
@@ -79,7 +49,7 @@ export default async function Home() {
     )
   ).json();
 
-  const result = resultSchema.parse(rawJson);
+  const result = routeResultSchema.parse(rawJson);
   const now = dayjs.tz(undefined, 'Europe/Zurich');
 
   return (
