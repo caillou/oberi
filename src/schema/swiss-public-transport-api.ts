@@ -31,3 +31,5 @@ const connectionSchema = z.object({
 export const routeResultSchema = z.object({
   connections: connectionSchema.array(),
 });
+
+export type RouteResult = z.infer<typeof routeResultSchema>;
