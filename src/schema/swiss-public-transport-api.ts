@@ -4,6 +4,7 @@ const sTrainLegSchema = z.object({
   type: z.literal('strain'),
   line: z.string(),
   terminal: z.string(),
+  track: z.string(),
 });
 
 export type STrainLeg = z.infer<typeof sTrainLegSchema>;

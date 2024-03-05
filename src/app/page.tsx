@@ -7,11 +7,16 @@ import { getDepartures } from '@/services/departures';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const result = await getDepartures();
+  const { oberi, winti } = await getDepartures();
 
   return (
-    <main>
-      <TimeTable result={result} />
+    <main className="flex w-full snap-x snap-mandatory overflow-auto">
+      <div className="w-full shrink-0 snap-start">
+        <TimeTable result={oberi} />
+      </div>
+      <div className="w-full shrink-0 snap-start">
+        <TimeTable result={winti} />
+      </div>
     </main>
   );
 }

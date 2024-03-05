@@ -74,7 +74,9 @@ function TimeTable({ result }: { result: RouteResult }) {
             <LineIcon line={leg.line} />
             <div className="grow">
               <div className="font-medium">{leg.terminal}</div>
-              <div className="text-sm">{departure.format('HH:mm')}</div>
+              <div className="text-sm">
+                {departure.format('HH:mm')}, Gleis {leg.track}
+              </div>
             </div>
 
             {goesToZurich(leg) && <ZurichIcon className="h-6" />}
