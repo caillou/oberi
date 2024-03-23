@@ -23,7 +23,12 @@ const fetchDetparures = async ({ from, to }: { from: string; to: string }) => {
 
   console.log(JSON.stringify(response, null, 2));
 
-  return routeResultSchema.parse(response);
+  try {
+    return routeResultSchema.parse(response);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getDepartures = async () => {

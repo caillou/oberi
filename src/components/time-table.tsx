@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useInterval } from 'usehooks-ts';
 
 import ZurichIcon from '@/components/zurich-icon';
-import type { RouteResult, STrainLeg } from '@/schema/swiss-public-transport-api';
+import type { RouteResult, TrainLeg } from '@/schema/swiss-public-transport-api';
 
 dayjs.extend(durationPlugin);
 dayjs.extend(timezonePlugin);
@@ -42,7 +42,7 @@ const formatDuration = (duration: Duration) => {
   return hours > 0 ? duration.format("H[h]mm[']") : `${minutes}'`;
 };
 
-const goesToZurich = (leg: STrainLeg) => !!leg.terminal.match(/zürich|aarau/i);
+const goesToZurich = (leg: TrainLeg) => !!leg.terminal.match(/zürich|aarau/i);
 
 const zurichTime = (timeString?: string) => dayjs.tz(timeString, 'Europe/Zurich');
 

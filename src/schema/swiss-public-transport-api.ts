@@ -7,11 +7,21 @@ const sTrainLegSchema = z.object({
   track: z.string(),
 });
 
-export type STrainLeg = z.infer<typeof sTrainLegSchema>;
+const nightSTrainLegSchema = z.object({
+  type: z.literal('night_strain'),
+  line: z.string(),
+  terminal: z.string(),
+  track: z.string(),
+});
+
+type STrainLeg = z.infer<typeof sTrainLegSchema>;
+type NightSTrainLeg = z.infer<typeof nightSTrainLegSchema>;
+export type TrainLeg = Omit<STrainLeg | NightSTrainLeg, 'type'>;
 
 const legSchema = z.tuple([
   z.discriminatedUnion('type', [
     sTrainLegSchema,
+    nightSTrainLegSchema,
     z.object({
       type: z.literal('walk'),
     }),
