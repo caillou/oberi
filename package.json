@@ -9,6 +9,9 @@
     "lint": "next lint",
     "prepare": "husky"
   },
+  "engines": {
+    "node": ">=22.17.1"
+  },
   "dependencies": {
     "dayjs": "^1.11.10",
     "next": "14.1.1",
